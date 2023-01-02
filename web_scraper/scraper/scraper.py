@@ -2,10 +2,6 @@ import requests
 
 from bs4 import BeautifulSoup
 
-page = requests.get(
-    "https://uk.indeed.com/jobs?q=&l=Berkhamsted%2C+Hertfordshire&from=searchOnHP&vjk=edc330f2dc5f7f73"
-)
-
 
 class Scraper:
     def __init__(self, url: str) -> None:
