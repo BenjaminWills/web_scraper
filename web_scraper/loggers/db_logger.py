@@ -18,7 +18,7 @@ def get_logger(
     output_path: str,
     save_log: bool = False,
     logger_name: str = __name__,
-) -> logging.Logger:
+) -> Logger:
     """Returns a logger that will return log files to the specified output location
 
     Parameters
