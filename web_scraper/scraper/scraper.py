@@ -12,12 +12,12 @@ class Scraper:
         self.url = url
 
         # CREATING THE PARSER
-        self.soup = self.__get_beautifulsoup_parser()
+        self.parser = self.__get_beautifulsoup_parser()
 
     def __get_page_info(self) -> bytes:
         page = requests.get(self.url)
         return page.content
 
-    def __get_beautifulsoup_parser(self):
+    def __get_beautifulsoup_parser(self) -> BeautifulSoup:
         parser = BeautifulSoup(self.__get_page_info(), "html.parser")
         return parser
