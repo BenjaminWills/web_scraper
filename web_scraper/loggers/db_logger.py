@@ -8,7 +8,7 @@ from logging import Logger
 
 def make_logging_directory() -> None:
     """
-    Will create a logging directory
+    Will create a logging directory if it does not already exist.
     """
     if not os.path.exists("logging"):
         os.mkdir("logging")
