@@ -50,7 +50,7 @@ class Sql:
         self.engine = self.get_engine()
         self.logger.info(self._log_connection_credentials())
 
-    def _log_connection_credentials(self):
+    def _log_connection_credentials(self) -> str:
         engine_connect_log = f"""
         Successfully connected with credentials:
             Database Username: {self.username}
