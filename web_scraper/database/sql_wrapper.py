@@ -47,7 +47,7 @@ class Sql:
         )
 
         # ENGINE CREATION
-        self.engine = self.get_engine()
+        self.engine = self.__get_engine()
         self.logger.info(self.__log_connection_credentials())
 
     def __log_connection_credentials(self) -> str:
@@ -61,7 +61,7 @@ class Sql:
         """
         return engine_connect_log
 
-    def get_engine(self) -> engine:
+    def __get_engine(self) -> engine:
         """Will get the sql engine to connect to the db.
 
         Returns
