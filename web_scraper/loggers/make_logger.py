@@ -1,8 +1,6 @@
 import logging
 import os
 
-# Import Typing
-
 from logging import Logger
 
 
