@@ -115,15 +115,13 @@ class Sql:
             insertion_statement = f"""
             INSERT INTO {table_name} \n \t (title, salary, city, county, position_info, job_description) VALUES
             """
-            index = 0
-            for entry in data:
+            for index, entry in enumerate(data):
                 values = ", ".join(
                     "'" + str(x).replace("'", "`") + "'" for x in entry.values()
                 )
                 insertion_statement += (
                     f"\n ({values}){',' if index < len(data)-1 else ';'}"
                 )
-                index += 1
             with self.engine.connect() as conn:
                 conn.execute(insertion_statement)
                 conn.close()
