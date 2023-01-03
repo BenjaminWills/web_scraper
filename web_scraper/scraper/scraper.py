@@ -233,6 +233,8 @@ class Scraper:
         List[Dict[str, str]]
             A list of summary dictionaries.
         """
+        self.logger.info("Parsing jobs")
         jobs = self.find_jobs("div", "col-sm-12 col-md-9 details")
         job_dictionaries = [self.parse_job(job) for job in jobs]
+        self.logger.info("Jobs parsed")
         return job_dictionaries
