@@ -4,7 +4,7 @@ import sys
 from bs4 import BeautifulSoup, element
 from web_scraper.loggers.make_logger import get_logger, make_logging_directory
 
-from typing import List
+from typing import List, Dict
 from urllib.error import HTTPError, URLError
 
 
@@ -28,7 +28,13 @@ class Scraper:
         self.parser = self.__get_beautifulsoup_parser()
 
     def __get_page_info(self) -> bytes:
+        """Gets the HTML format of the page
 
+        Returns
+        -------
+        bytes
+            page HTML
+        """
         try:
             self.logger.info("Loading page information")
             page = requests.get(self.url)
@@ -41,6 +47,13 @@ class Scraper:
             sys.exit(0)
 
     def __get_beautifulsoup_parser(self) -> BeautifulSoup:
+        """Getter for the bs4 parser
+
+        Returns
+        -------
+        BeautifulSoup
+            beautiful soup html parser
+        """
         try:
             parser = BeautifulSoup(self.__get_page_info(), "html.parser")
             return parser
@@ -49,33 +62,52 @@ class Scraper:
             self.logger.exception(e)
             sys.exit(0)
 
-    def find_jobs(self, tag: str, css_class: str) -> List[str]:
-        jobs = self.parser.find_all(tag, class_=css_class)
-        return jobs
+    def find_jobs(self, tag: str, css_class: str) -> List[element.Tag]:
+        """gets a list of all of the job listings on a given Reed page.
 
-    def __parse_salary(self, salary_tag):
+        Parameters
+        ----------
+        tag : str
+            HTML tag that you are looking for
+        css_class : str
+            CSS class assosiated with the tag
+
+        Returns
+        -------
+        List[element.Tag]
+            A list of bs4 Tag objects
+        """
+        try:
+            jobs = self.parser.find_all(tag, class_=css_class)
+            return jobs
+        except Exception as e:
+            self.logger.info("There was an error.")
+            self.logger.exception(e)
+            sys.exit(0)
+
+    def __parse_salary(self, salary_tag: element.Tag):
         salary = salary_tag.text.strip()
         return salary
 
-    def __parse_county(self, location_tag):
+    def __parse_county(self, location_tag: element.Tag):
         county_tag = location_tag.find("span")
         county = county_tag.text.strip()
         return county
 
-    def __parse_location(self, location_tag):
+    def __parse_location(self, location_tag: element.Tag):
         location_tag_text = location_tag.text
         split_newline = location_tag_text.split("\n")
         location = split_newline[1].strip()
         return location
 
-    def __parse_position(self, position_tag):
+    def __parse_position(self, position_tag: element.Tag):
         return position_tag.text.strip()
 
-    def __parse_job_title(self, job):
+    def __parse_job_title(self, job: element.Tag):
         title_tag = job.find("h2")
         return title_tag.text.strip()
 
-    def __parse_job_description(self, job):
+    def __parse_job_description(self, job: element.Tag):
         job_description = job.find("p", {"class": "job-result-description__details"})
         return job_description.text.strip()
 
@@ -102,7 +134,7 @@ class Scraper:
 
     def parse_jobs(
         self,
-    ) -> List[dict]:
+    ) -> List[Dict[str, str]]:
         jobs = self.find_jobs("div", "col-sm-12 col-md-9 details")
         job_dictionaries = [self.parse_job(job) for job in jobs]
         return job_dictionaries
