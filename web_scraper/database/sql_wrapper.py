@@ -105,9 +105,34 @@ class Sql:
             self.logger.info("An error has occured, the query could not be executed.")
             sys.exit(0)
 
-    def insert_job_into_table(table_name: str, data: Dict[str, str]) -> None:
-        insertion_statement = f"""
-        INSERT INTO {table_name} {tuple(data.keys())}
-        {tuple(data.values())}
-        """
-        return insertion_statement
+    def insert_jobs_into_table(
+        self, table_name: str, data: List[Dict[str, str]]
+    ) -> None:
+        try:
+            columns = ", ".join(
+                "`" + str(x).replace("/", "_") + "`" for x in data[0].keys()
+            )
+
+            self.logger.info(f"Inserting data into table with columns: \n \t {columns}")
+            insertion_statement = f"""
+            INSERT INTO {table_name} ({columns}) VALUES
+            """
+            index = 0
+            for entry in data:
+                values = ", ".join(
+                    "'" + str(x).replace("/", "_") + "'" for x in entry.values()
+                )
+                insertion_statement += (
+                    f"\n ({values}){',' if index < len(data)-1 else ';'}"
+                )
+                index += 1
+            with self.engine.connect() as conn:
+                conn.execute(insertion_statement)
+                conn.commit()
+                conn.close()
+
+            self.logger.info(f"Data inserted into table: {table_name}")
+        except SQLAlchemyError as sqle:
+            self.logger.exception(sqle)
+            self.logger.info("An error has occured, the query could not be executed.")
+            sys.exit(0)
