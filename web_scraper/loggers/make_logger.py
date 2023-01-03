@@ -40,7 +40,7 @@ def get_logger(
 
     if save_log:
         file_handler = logging.FileHandler(output_path)
-        formatter = logging.Formatter("%(asctime)s :: %(message)s")
+        formatter = logging.Formatter("%(asctime)s :: -> %(message)s")
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
 
