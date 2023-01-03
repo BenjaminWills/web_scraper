@@ -110,17 +110,17 @@ class Sql:
     ) -> None:
         try:
             columns = ", ".join(
-                "`" + str(x).replace("/", "_") + "`" for x in data[0].keys()
+                '"' + str(x).replace("/", "_") + '"' for x in data[0].keys()
             )
 
             self.logger.info(f"Inserting data into table with columns: \n \t {columns}")
             insertion_statement = f"""
-            INSERT INTO {table_name} ({columns}) VALUES
+            INSERT INTO {table_name} \n \t (title, salary, city, county, position_info, job_description) VALUES
             """
             index = 0
             for entry in data:
                 values = ", ".join(
-                    "'" + str(x).replace("/", "_") + "'" for x in entry.values()
+                    "'" + str(x).replace("'", "`") + "'" for x in entry.values()
                 )
                 insertion_statement += (
                     f"\n ({values}){',' if index < len(data)-1 else ';'}"
@@ -128,7 +128,6 @@ class Sql:
                 index += 1
             with self.engine.connect() as conn:
                 conn.execute(insertion_statement)
-                conn.commit()
                 conn.close()
 
             self.logger.info(f"Data inserted into table: {table_name}")
