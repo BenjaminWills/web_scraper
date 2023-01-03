@@ -105,5 +105,9 @@ class Sql:
             self.logger.info("An error has occured, the query could not be executed.")
             sys.exit(0)
 
-    def insert_job_into_table(data: Dict[str, str]) -> None:
-        pass
+    def insert_job_into_table(table_name: str, data: Dict[str, str]) -> None:
+        insertion_statement = f"""
+        INSERT INTO {table_name} {tuple(data.keys())}
+        {tuple(data.values())}
+        """
+        return insertion_statement
