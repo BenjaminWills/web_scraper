@@ -108,11 +108,9 @@ class Sql:
     def insert_jobs_into_table(
         self, table_name: str, data: List[Dict[str, str]]
     ) -> None:
-        try:
-            columns = ", ".join(
-                '"' + str(x).replace("/", "_") + '"' for x in data[0].keys()
-            )
 
+        try:
+            columns = data[0].keys()
             self.logger.info(f"Inserting data into table with columns: \n \t {columns}")
             insertion_statement = f"""
             INSERT INTO {table_name} \n \t (title, salary, city, county, position_info, job_description) VALUES
