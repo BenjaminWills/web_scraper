@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     sql = Sql(user, password, host, port, database)
 
-    scraper = Scraper("https://www.reed.co.uk/jobs/jobs-in-hp41fj")
+    scraper = Scraper("https://www.reed.co.uk/jobs/jobs-in-SW1A0AA")
     jobs = scraper.parse_jobs()
 
     sql.insert_jobs_into_table("jobs", jobs)
