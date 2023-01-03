@@ -78,7 +78,9 @@ class Scraper:
             A list of bs4 Tag objects
         """
         try:
+            self.logger.info("Getting all jobs")
             jobs = self.parser.find_all(tag, class_=css_class)
+            self.logger.info("Jobs successfully obtained")
             return jobs
         except Exception as e:
             self.logger.info("There was an error.")
