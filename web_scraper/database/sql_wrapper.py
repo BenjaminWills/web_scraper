@@ -3,7 +3,7 @@
 import sqlalchemy
 import sys
 
-from web_scraper.loggers.db_logger import make_logging_directory, get_logger
+from web_scraper.loggers.make_logger import make_logging_directory, get_logger
 
 # Error Catching
 

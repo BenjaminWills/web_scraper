@@ -1,6 +1,7 @@
 import requests
 
 from bs4 import BeautifulSoup, element
+from web_scraper.loggers.make_logger import get_logger, make_logging_directory
 
 from typing import List
 
@@ -15,6 +16,14 @@ class Scraper:
 
         # CREATING THE PARSER
         self.parser = self.__get_beautifulsoup_parser()
+
+        # CREATING THE LOGGER
+        make_logging_directory()
+        self.logger = get_logger(
+            output_path="logging/scraper.log",
+            save_log=True,
+            logger_name="Scraper",
+        )
 
     def __get_page_info(self) -> bytes:
         page = requests.get(self.url)
