@@ -13,6 +13,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from sqlalchemy import engine
 from sqlalchemy.engine import LegacyCursorResult
+from typing import Dict, List
 
 
 class Sql:
@@ -103,3 +104,6 @@ class Sql:
             self.logger.exception(sqle)
             self.logger.info("An error has occured, the query could not be executed.")
             sys.exit(0)
+
+    def insert_job_into_table(data: Dict[str, str]) -> None:
+        pass
