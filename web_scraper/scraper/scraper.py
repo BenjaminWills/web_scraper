@@ -1,6 +1,8 @@
 import requests
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, element
+
+from typing import List
 
 
 class Scraper:
@@ -22,6 +24,12 @@ class Scraper:
         parser = BeautifulSoup(self.__get_page_info(), "html.parser")
         return parser
 
-    def find_jobs(self, tag: str, css_class: str) -> list:
+    def find_jobs(self, tag: str, css_class: str) -> List[str]:
         jobs = self.parser.find_all(tag, class_=css_class)
         return jobs
+
+    def parse_job(job: element.Tag) -> dict:
+        pass
+
+    def parse_jobs(jobs: List[element.Tag]) -> List[dict]:
+        pass
