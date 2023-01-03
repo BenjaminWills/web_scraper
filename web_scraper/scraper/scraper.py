@@ -1,4 +1,5 @@
 import requests
+import sys
 
 from bs4 import BeautifulSoup, element
 from web_scraper.loggers.make_logger import get_logger, make_logging_directory
@@ -15,9 +16,6 @@ class Scraper:
     def __init__(self, url: str) -> None:
         self.url = url
 
-        # CREATING THE PARSER
-        self.parser = self.__get_beautifulsoup_parser()
-
         # CREATING THE LOGGER
         make_logging_directory()
         self.logger = get_logger(
@@ -25,6 +23,9 @@ class Scraper:
             save_log=True,
             logger_name="Scraper",
         )
+
+        # CREATING THE PARSER
+        self.parser = self.__get_beautifulsoup_parser()
 
     def __get_page_info(self) -> bytes:
 
@@ -34,17 +35,19 @@ class Scraper:
             self.logger.info("Page information loaded")
             return page.content
 
-        except HTTPError or URLError as e:
+        except HTTPError or URLError as request_error:
             self.logger.info("There was an error.")
-            self.logger.exception(e)
-            return None
+            self.logger.exception(request_error)
+            sys.exit(0)
 
     def __get_beautifulsoup_parser(self) -> BeautifulSoup:
         try:
             parser = BeautifulSoup(self.__get_page_info(), "html.parser")
             return parser
         except Exception as e:
-            pass
+            self.logger.info("There was an error.")
+            self.logger.exception(e)
+            sys.exit(0)
 
     def find_jobs(self, tag: str, css_class: str) -> List[str]:
         jobs = self.parser.find_all(tag, class_=css_class)
