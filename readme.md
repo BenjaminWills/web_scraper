@@ -20,4 +20,4 @@ To scrape I have been using the [`beautiful soup`](crummy.com/software/Beautiful
 
 ## Conclusion
 
-The program runs daily, scraping for new jobs on reed.com in a desired location, and then pushing them to a postgreSQL database.
+The program runs daily, scraping for new jobs on [reed.com](reed.com) in a desired location, and then pushing them to a postgreSQL database.
