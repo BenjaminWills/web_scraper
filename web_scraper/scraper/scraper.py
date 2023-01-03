@@ -85,33 +85,122 @@ class Scraper:
             self.logger.exception(e)
             sys.exit(0)
 
-    def __parse_salary(self, salary_tag: element.Tag):
+    def __parse_salary(self, salary_tag: element.Tag) -> str:
+        """Parses the salary from a given tag
+
+        Parameters
+        ----------
+        salary_tag : element.Tag
+            Tag containing salary information
+        Returns
+        -------
+        str
+            Salary information
+        """
         salary = salary_tag.text.strip()
         return salary
 
-    def __parse_county(self, location_tag: element.Tag):
+    def __parse_county(self, location_tag: element.Tag) -> str:
+        """Will parse the county from a location tag
+
+        Parameters
+        ----------
+        location_tag : element.Tag
+            A tag containing the location
+
+        Returns
+        -------
+        str
+            The county
+        """
         county_tag = location_tag.find("span")
         county = county_tag.text.strip()
         return county
 
-    def __parse_location(self, location_tag: element.Tag):
+    def __parse_location(self, location_tag: element.Tag) -> str:
+        """Will parse the location (city) from a location tag
+
+        Parameters
+        ----------
+        location_tag : element.Tag
+            A tag containing the location
+
+        Returns
+        -------
+        str
+            city
+        """
         location_tag_text = location_tag.text
         split_newline = location_tag_text.split("\n")
         location = split_newline[1].strip()
         return location
 
-    def __parse_position(self, position_tag: element.Tag):
+    def __parse_position(self, position_tag: element.Tag) -> str:
+        """Will parse a position tag to find fulltime, part time etc.
+
+        Parameters
+        ----------
+        position_tag : element.Tag
+            Tag containing position
+
+        Returns
+        -------
+        str
+            posiiton info, i.e full time part time...
+        """
         return position_tag.text.strip()
 
-    def __parse_job_title(self, job: element.Tag):
+    def __parse_job_title(self, job: element.Tag) -> str:
+        """Parses the job tag to find the job title.
+
+        Parameters
+        ----------
+        job : element.Tag
+            Job tag
+
+        Returns
+        -------
+        str
+            Job title
+        """
         title_tag = job.find("h2")
         return title_tag.text.strip()
 
-    def __parse_job_description(self, job: element.Tag):
+    def __parse_job_description(self, job: element.Tag) -> str:
+        """Parses the job for a job description
+
+        Parameters
+        ----------
+        job : element.Tag
+            Job tag
+
+        Returns
+        -------
+        str
+            Job description
+        """
         job_description = job.find("p", {"class": "job-result-description__details"})
         return job_description.text.strip()
 
-    def parse_job(self, job: element.Tag) -> dict:
+    def parse_job(self, job: element.Tag) -> Dict[str, str]:
+        """parses a job and extracts useful info
+
+        Parameters
+        ----------
+        job : element.Tag
+            Job tag
+
+        Returns
+        -------
+        Dict[str,str]
+            dictionay contianing:
+            - title
+            - salary
+            - city
+            - counry
+            - position information
+            - job description
+        """
         list_tags = job.find_all("li")
         salary_tag, location_tag, position_tag = (
             list_tags[0],
@@ -135,6 +224,13 @@ class Scraper:
     def parse_jobs(
         self,
     ) -> List[Dict[str, str]]:
+        """Parses all jobs on a webpage
+
+        Returns
+        -------
+        List[Dict[str, str]]
+            A list of summary dictionaries.
+        """
         jobs = self.find_jobs("div", "col-sm-12 col-md-9 details")
         job_dictionaries = [self.parse_job(job) for job in jobs]
         return job_dictionaries
