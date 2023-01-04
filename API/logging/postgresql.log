@@ -1,0 +1,40 @@
+2023-01-04 16:25:49,643 :: -> Initalising database engine
+2023-01-04 16:25:49,786 :: -> Database engine created successfully
+2023-01-04 16:25:49,786 :: -> 
+        Successfully connected with credentials:
+            Database Username: web_scraper
+            Database Password: ****
+            Database Host: 0000
+            Database Port: 5432
+            Database Name: scraper
+        
+2023-01-04 16:25:49,938 :: -> Initalising database engine
+2023-01-04 16:25:49,951 :: -> Database engine created successfully
+2023-01-04 16:25:49,951 :: -> 
+        Successfully connected with credentials:
+            Database Username: web_scraper
+            Database Password: ****
+            Database Host: 0000
+            Database Port: 5432
+            Database Name: scraper
+        
+2023-01-04 16:26:54,589 :: -> Initalising database engine
+2023-01-04 16:26:54,611 :: -> Database engine created successfully
+2023-01-04 16:26:54,611 :: -> 
+        Successfully connected with credentials:
+            Database Username: web_scraper
+            Database Password: ****
+            Database Host: 0000
+            Database Port: 5432
+            Database Name: scraper
+        
+2023-01-04 16:26:54,761 :: -> Initalising database engine
+2023-01-04 16:26:54,774 :: -> Database engine created successfully
+2023-01-04 16:26:54,775 :: -> 
+        Successfully connected with credentials:
+            Database Username: web_scraper
+            Database Password: ****
+            Database Host: 0000
+            Database Port: 5432
+            Database Name: scraper
+        
