@@ -57,9 +57,9 @@ def find_job():
 
 @app.route("/find/job/by-id/<int:id>", methods=["GET"])
 def find_job_by_id(id: int):
-    if request.method == "GET":
-        inputted_key = str(request.args.get("api-key"))
-        if validate_api_key(inputted_key):
+    inputted_key = str(request.args.get("api-key"))
+    if validate_api_key(inputted_key):
+        if request.method == "GET":
             result = sql.execute_query(
                 f"""
                 SELECT * 
