@@ -3,9 +3,9 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 
-app = Flask(__name__)
-
 from web_scraper.database.sql_wrapper import Sql
+
+app = Flask(__name__)
 
 load_dotenv(override=True)
 
@@ -35,27 +35,39 @@ def job_tuple_to_dict(job_tuple: tuple) -> dict:
     return dict(dictionary_contents)
 
 
+def validate_api_key(inputted_key: str):
+    return inputted_key == api_key
+
+
 @app.route("/find/job", methods=["GET"])
 def find_job():
-    if request.method == "GET":
-        result = sql.execute_query(
-            f"""
-            SELECT * 
-            FROM jobs;
-            """
-        )
-        return jsonify([job_tuple_to_dict(job) for job in result])
+    inputted_key = str(request.args.get("api-key"))
+    if validate_api_key(inputted_key):
+        if request.method == "GET":
+            result = sql.execute_query(
+                f"""
+                SELECT * 
+                FROM jobs;
+                """
+            )
+            return jsonify([job_tuple_to_dict(job) for job in result])
+    else:
+        return jsonify(dict(error=404))
 
 
 @app.route("/find/job/by-id/<int:id>", methods=["GET"])
 def find_job_by_id(id: int):
     if request.method == "GET":
-        result = sql.execute_query(
-            f"""
-            SELECT * 
-            FROM jobs 
-            WHERE id = {id};
-            """
-        )
+        inputted_key = str(request.args.get("api-key"))
+        if validate_api_key(inputted_key):
+            result = sql.execute_query(
+                f"""
+                SELECT * 
+                FROM jobs 
+                WHERE id = {id};
+                """
+            )
 
-        return jsonify(job_tuple_to_dict(tuple(result[0])))
+            return jsonify(job_tuple_to_dict(tuple(result[0])))
+    else:
+        return jsonify(dict(error=404))
