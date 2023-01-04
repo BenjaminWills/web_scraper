@@ -1,6 +1,6 @@
 # Webscraper
 
-In this project Im going to make a webscraper that will scrape a job board periodically and then send each job to a database.
+In this project have made a webscraper that will scrape a job board periodically and then send each job to a database.
 
 ## Database
 
@@ -9,6 +9,10 @@ I will be using postgreSQL as the database of choice. This will be using the [`S
 ## Scraper
 
 To scrape I have been using the [`beautiful soup`](crummy.com/software/BeautifulSoup/bs4/doc/) library, on [reed.com](reed.com). The code is well documented, so I will not be explaining how it works here.
+
+## API
+
+To query the scraped data for specific jobs I have created an API using [`flask`](https://flask.palletsprojects.com/en/2.2.x/api/).
 
 ## Conclusion
 
