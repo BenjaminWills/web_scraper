@@ -4,3 +4,4 @@ __pycache__/*
 logging/*
 *.ipynb*
 .env
+*.log
