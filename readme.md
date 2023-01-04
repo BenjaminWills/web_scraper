@@ -14,6 +14,8 @@ To scrape I have been using the [`beautiful soup`](crummy.com/software/Beautiful
 
 To query the scraped data for specific jobs I have created an API using [`flask`](https://flask.palletsprojects.com/en/2.2.x/api/).
 
+[quickstart reference](https://flask.palletsprojects.com/en/2.2.x/quickstart/#:~:text=To%20run%20the%20application%2C%20use,with%20the%20%2D%2Dapp%20option.&text=As%20a%20shortcut%2C%20if%20the,Line%20Interface%20for%20more%20details.)
+
 ## Conclusion
 
 The program runs daily, scraping for new jobs on [reed.com](reed.com) in a desired location, and then pushing them to a postgreSQL database.
