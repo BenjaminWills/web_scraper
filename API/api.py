@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 load_dotenv(override=True)
 
+ACCESS_DENIED_CODE = 403
 
 api_key = os.getenv("api_key")
 
@@ -52,7 +53,7 @@ def find_job():
             )
             return jsonify([job_tuple_to_dict(job) for job in result])
     else:
-        return jsonify(dict(error=404))
+        return jsonify(dict(error_code=403))
 
 
 @app.route("/find/job/by-field/<field>=<value>", methods=["GET"])
@@ -70,4 +71,4 @@ def find_job_by_field(field: str, value):
 
             return jsonify(job_tuple_to_dict(tuple(result[0])))
     else:
-        return jsonify(dict(error=404))
+        return jsonify(dict(error_code=403))
