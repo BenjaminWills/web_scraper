@@ -55,8 +55,8 @@ def find_job():
         return jsonify(dict(error=404))
 
 
-@app.route("/find/job/by-id/<int:id>", methods=["GET"])
-def find_job_by_id(id: int):
+@app.route("/find/job/by-field/<field>=<value>", methods=["GET"])
+def find_job_by_field(field: str, value):
     inputted_key = str(request.args.get("api-key"))
     if validate_api_key(inputted_key):
         if request.method == "GET":
@@ -64,7 +64,7 @@ def find_job_by_id(id: int):
                 f"""
                 SELECT * 
                 FROM jobs 
-                WHERE id = {id};
+                WHERE {field} = {value};
                 """
             )
 
