@@ -40,3 +40,4 @@ The program runs daily, scraping for new jobs on [reed.com](reed.com) in a desir
 # TODO
 
 - replace `postgres` backend with `mongodb` backend.
+- Dockerise entire application and write instructions on how to use
