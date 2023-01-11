@@ -1,5 +1,4 @@
 bs4 # WEB SCRAPER
-sqlalchemy # DATABASE CONNECTION ENGINE
-psycopg2 # DATABASE DRIVER
+pymongo # MONGODB API
 python-dotenv # LOADING ENV VARS
 flask # API
