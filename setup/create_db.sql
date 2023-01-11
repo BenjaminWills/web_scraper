@@ -1,3 +1,0 @@
-CREATE DATABASE scraper;
-GRANT ALL PRIVILEGES ON DATABASE scraper TO <NAME>;
-\connect scraper;

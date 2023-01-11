@@ -2,25 +2,16 @@ version: "3.8"
 
 services:
   scraper_db:
-    image: postgres:14
-    restart: always
-
+    container_name: database
+    image: mongo:4.0
     environment:
-      - POSTGRES_USER = postgres
-      - POSTGRES_PASSWORD = postgres
+      MONGO_INITDB_DATABASE: data
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
     ports:
-      - "5432:5432"
+      - 27017:27017
     volumes:
-      - postgres:/var/lib/postgresql/data
-
-  pg-admin:
-    image: dpage/pgadmin4:6
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=benjaminwills047@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-      - PGADMIN_LISTEN_PORT=5050
-    ports:
-      - "5050:5050"
+      - mongo_db:/data/db
 
   api:
     image: api:latest
@@ -30,5 +21,5 @@ services:
       - "5001:5001"
 
 volumes:
-  postgres:
+  mongo_db:
     driver: local
