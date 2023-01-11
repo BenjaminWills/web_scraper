@@ -1,5 +1,6 @@
 import pymongo
 
+from typing import List
 from web_scraper.loggers.make_logger import get_logger, make_logging_directory
 
 
@@ -24,10 +25,40 @@ class Mongo:
             self.logger.exception(pme)
             return None
 
-    def insert_entry(self, db_name: str, collection: str, entry: dict) -> bool:
+    def insert_entry(self, db_name: str, collection_name: str, entry: dict) -> bool:
         try:
             with self.client as client:
-                client.close()
+                db = client[db_name]
+                collection = db[collection_name]
+                collection.insert_one(entry)
+        except pymongo.errors.PyMongoError as pme:
+            self.logger.exception(pme)
+            return False
+        finally:
+            client.close()
+
+    def insert_entries(
+        self, db_name: str, collection_name: str, entries: List[dict]
+    ) -> bool:
+        try:
+            with self.client as client:
+                db = client[db_name]
+                collection = db[collection_name]
+                collection.insert_many(entries)
+        except pymongo.errors.PyMongoError as pme:
+            self.logger.exception(pme)
+            return False
+        finally:
+            client.close()
+
+    def find_all_entries(self, db_name: str, collection_name: str):
+        try:
+            with self.client as client:
+                db = client[db_name]
+                collection = db[collection_name]
+                contents = collection.find()
+
+            return contents
         except pymongo.errors.PyMongoError as pme:
             self.logger.exception(pme)
             return False
