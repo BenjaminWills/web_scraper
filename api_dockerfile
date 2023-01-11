@@ -1,0 +1,11 @@
+FROM python:3.9
+
+# WORKDIR /user/src/api
+
+COPY API/api.py API/api_requirements.txt ./
+
+RUN pip install -r api_requirements.txt
+
+EXPOSE 5001
+
+# CMD python app.py

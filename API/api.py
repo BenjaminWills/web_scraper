@@ -72,3 +72,7 @@ def find_job_by_field(field: str, value):
             return jsonify(job_tuple_to_dict(tuple(result[0])))
     else:
         return jsonify(dict(error_code=403))
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5001, debug=False)
