@@ -13,12 +13,12 @@ services:
     volumes:
       - mongo_db:/data/db
 
-  api:
-    image: api:latest
-    build:
-      dockerfile: ./api_dockerfile
-    ports:
-      - "5001:5001"
+  # api:
+  #   image: api:latest
+  #   build:
+  #     dockerfile: ./api_dockerfile
+  #   ports:
+  #     - "5001:5001"
 
 volumes:
   mongo_db:
